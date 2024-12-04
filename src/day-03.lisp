@@ -1,7 +1,7 @@
 (defpackage :aoc2024-03
   (:use :cl :aoc2024-utils)
   (:export
-   #:*lines*
+   #:*data*
    #:solve-1
    #:solve-2))
 
