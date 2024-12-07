@@ -14,6 +14,17 @@
     :initarg :steps
     :accessor guard-loop-steps)))
 
+(defmacro dotiles ((position map &optional result) &body body)
+  (let ((map-var (gensym "MAP-"))
+        (x (gensym "X-"))
+        (y (gensym "Y-")))
+    `(let ((,map-var ,map))
+       (dotimes (,y (array-dimension ,map-var 0))
+         (dotimes (,x (array-dimension ,map-var 1))
+           (let ((,position (cons ,x ,y)))
+             ,@body)))
+       ,result)))
+
 (defun solve-1 ()
   (let ((map (parse-map *lines*)))
     (move-guard map)
@@ -60,17 +71,6 @@
 
 (defun (setf tile) (value position map)
   (setf (aref map (cdr position) (car position)) value))
-
-(defmacro dotiles ((position map &optional result) &body body)
-  (let ((map-var (gensym "MAP-"))
-        (x (gensym "X-"))
-        (y (gensym "Y-")))
-    `(let ((,map-var ,map))
-       (dotimes (,y (array-dimension ,map-var 0))
-         (dotimes (,x (array-dimension ,map-var 1))
-           (let ((,position (cons ,x ,y)))
-             ,@body)))
-       ,result)))
 
 (defun count-visited-tiles (map)
   (let ((count 0))
