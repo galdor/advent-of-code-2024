@@ -9,8 +9,6 @@
 
 (defvar *lines* (input-file-lines 10))
 
-(defvar *map* (parse-map *lines*))
-
 (defun parse-map (lines)
   (let* ((height (length lines))
          (width (length (first lines)))
@@ -22,6 +20,8 @@
       (dotimes (x width)
         (setf (aref map y x)
               (- (char-code (aref (car lines) x)) (char-code #\0)))))))
+
+(defvar *map* (parse-map *lines*))
 
 (defun solve-1 ()
   (let ((sum 0))
